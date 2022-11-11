@@ -38,7 +38,7 @@ public class AuthData implements Serializable {
     
     public String getFriends(String name,String pwd,String ip) {
         if(!checkPassword(name,pwd)) {
-           return "Invalid Password";
+           return "Wrong Password";
        }
        updateIP(name,ip);
        dataUpdated();
@@ -55,10 +55,10 @@ public class AuthData implements Serializable {
     
     public String addFriend(String uname,String pwd,String friend) {
        if(!checkPassword(uname,pwd)) {
-           return "Invalid Password";
+           return "Wrong Password";
        }
        if(!isUser(friend))
-           return "Invalid Friend Name";
+           return "Username does not exist";
        if(friends.get(uname).contains(friend.trim())) 
            return "Already a Friend";
        friends.get(uname).add(friend);
@@ -70,8 +70,6 @@ public class AuthData implements Serializable {
     public String register(String name, String pwd, String ip) {
         if(isUser(name))
            return "Username Already in Use";
-        if(name.isEmpty() || pwd.isEmpty())
-            return "Please enter Username and Password";
         users.put(name,pwd);
         friends.put(name, new ArrayList<>());
         updateIP(name,ip);

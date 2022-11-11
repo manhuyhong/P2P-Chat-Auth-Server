@@ -50,18 +50,19 @@ public class AuthServer extends Thread{
         String friend = br.readLine().trim();
         bw.write(AuthData.getInstance().addFriend(name,pwd,friend));
         bw.flush();
+        System.out.println(name + " added a new friend: " + friend);
     }
 
     private boolean checkLogin(BufferedReader br, BufferedWriter bw, boolean b, String ip) throws IOException {
         String name=br.readLine().trim();
-        System.out.println("Checking : "+name+" from "+ip);
         String pwd = br.readLine();
+        
         if(AuthData.getInstance().isUser(name)) {
             
             if(AuthData.getInstance().checkPassword(name, pwd)) {
                 AuthData.getInstance().updateIP(name,ip);
                 AuthData.getInstance().dataUpdated();
-                System.out.println("Login for "+name);
+                System.out.println(name + " logged in from " + ip);
                 if(!b)
                     return true;
                 else
@@ -69,9 +70,15 @@ public class AuthServer extends Thread{
                 bw.flush();
                 return true;
             }
-            else bw.write("Invalid Password");
+            else {
+                bw.write("Wrong Password");
+                System.out.println(name + " from " + ip + " failed to log in. Reason: Wrong password");
+            }
         }
-        else bw.write("Invalid User");
+        else {
+            bw.write("Username does not exist");
+            System.out.println(name + " from " + ip + " failed to log in. Reason: Username does not exist");
+        }
         bw.flush();
         return false;
     }
