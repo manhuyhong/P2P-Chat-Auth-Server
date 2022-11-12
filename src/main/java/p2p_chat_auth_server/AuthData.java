@@ -63,6 +63,7 @@ public class AuthData implements Serializable {
            return "Already a Friend";
        friends.get(uname).add(friend);
        dataUpdated();
+       System.out.println(uname + " added a new friend: " + friend);
        return "DONE";
     } 
 
@@ -74,6 +75,7 @@ public class AuthData implements Serializable {
         friends.put(name, new ArrayList<>());
         updateIP(name,ip);
         dataUpdated();
+        System.out.println(name + " registered from " + ip);
         return "DONE";
     }
     

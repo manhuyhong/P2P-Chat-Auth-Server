@@ -50,7 +50,6 @@ public class AuthServer extends Thread{
         String friend = br.readLine().trim();
         bw.write(AuthData.getInstance().addFriend(name,pwd,friend));
         bw.flush();
-        System.out.println(name + " added a new friend: " + friend);
     }
 
     private boolean checkLogin(BufferedReader br, BufferedWriter bw, boolean b, String ip) throws IOException {
